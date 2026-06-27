@@ -1,0 +1,23 @@
+# Java
+target/
+*.class
+*.jar
+*.war
+*.log
+
+# IDE
+.idea/
+.project
+.settings/
+.classpath
+.vscode/
+
+# Node
+node_modules/
+dist/
+
+# macOS
+.DS_Store
+
+# Environment
+.env
