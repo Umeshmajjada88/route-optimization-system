@@ -1,9 +1,21 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import "leaflet/dist/leaflet.css";
+import "./config/leafletConfig";
 import App from "./App";
+import { RouteProvider } from "./context/RouteContext";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+createRoot(document.getElementById("root")).render(
+
+    <StrictMode>
+
+        <RouteProvider>
+
+            <App />
+
+        </RouteProvider>
+
+    </StrictMode>
+
 );

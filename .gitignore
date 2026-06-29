@@ -1,20 +1,32 @@
 # Java
 target/
 *.class
+*.log
 *.jar
 *.war
-*.log
+*.ear
 
-# IDE
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ
 .idea/
+*.iml
+
+# Eclipse / STS
 .project
-.settings/
 .classpath
+.settings/
+
+# VS Code
 .vscode/
 
 # Node
-node_modules/
-dist/
+frontend/node_modules/
+frontend/dist/
+
+# React
+frontend/.vite/
 
 # macOS
 .DS_Store
