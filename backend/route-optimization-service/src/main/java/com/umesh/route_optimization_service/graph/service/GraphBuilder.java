@@ -12,8 +12,10 @@ import com.umesh.route_optimization_service.traffic.entity.TrafficInfo;
 import com.umesh.route_optimization_service.traffic.entity.TrafficLevel;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +27,11 @@ public class GraphBuilder {
 
     private final TrafficInfoRepository trafficRepository;
 
+    
     @Cacheable("graphCache")
-    public Graph buildGraph()  {
+    public Graph buildGraph() {
+
+        System.out.println("******** BUILDING GRAPH ********");
 
         Graph graph = new Graph();
 
@@ -92,5 +97,13 @@ public class GraphBuilder {
 
         return graph;
     }
+
+    @CacheEvict(value = "graphCache", allEntries = true)
+    public void evictGraphCache() {
+
+        // Intentionally empty.
+        // Spring will clear the cache.
+    }
+    
 
 }

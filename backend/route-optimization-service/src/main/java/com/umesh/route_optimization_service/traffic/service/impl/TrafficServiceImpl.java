@@ -2,6 +2,7 @@ package com.umesh.route_optimization_service.traffic.service.impl;
 
 import com.umesh.route_optimization_service.entity.RoadSegment;
 import com.umesh.route_optimization_service.exception.ResourceNotFoundException;
+import com.umesh.route_optimization_service.graph.service.GraphBuilder;
 import com.umesh.route_optimization_service.repository.RoadSegmentRepository;
 import com.umesh.route_optimization_service.traffic.dto.TrafficRequest;
 import com.umesh.route_optimization_service.traffic.dto.TrafficResponse;
@@ -21,6 +22,9 @@ public class TrafficServiceImpl implements TrafficService {
 
     private final RoadSegmentRepository roadRepository;
 
+    private final GraphBuilder graphBuilder;
+
+
     @Override
     @CacheEvict(value = "graphCache", allEntries = true)
     public TrafficResponse updateTraffic(TrafficRequest request) {
@@ -39,6 +43,7 @@ public class TrafficServiceImpl implements TrafficService {
         traffic.setAverageSpeed(request.getAverageSpeed());
 
         trafficRepository.save(traffic);
+        graphBuilder.evictGraphCache();
 
         return TrafficMapper.toResponse(traffic);
 

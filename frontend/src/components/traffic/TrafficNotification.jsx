@@ -14,9 +14,10 @@ function TrafficNotification() {
   }
 
   const handleRecalculate = async () => {
+    console.log("Last Request:", lastRequest);
+
     if (!lastRequest) {
       setTrafficUpdated(false);
-
       return;
     }
 

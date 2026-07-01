@@ -2,7 +2,11 @@ package com.umesh.route_optimization_service.graph.model;
 
 import java.util.*;
 
-public class Graph {
+import java.io.Serializable;
+
+public class Graph implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final Map<Long, GraphNode> nodes = new HashMap<>();
 
@@ -33,7 +37,8 @@ public class Graph {
 
     public Collection<GraphNode> getNodes() {
 
-        return nodes.values();
+        return new ArrayList<>(nodes.values());
+
     }
 
     // ⭐ ADD THIS
