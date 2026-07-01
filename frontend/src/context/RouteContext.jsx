@@ -8,25 +8,33 @@ export function RouteProvider({ children }) {
 
     const [route, setRoute] = useState(null);
 
+    const [lastRequest, setLastRequest] = useState(null);
+
     const [loading, setLoading] = useState(false);
 
+    const [error, setError] = useState(null);
+
     return (
+      <RouteContext.Provider
+        value={{
+          locations,
+          setLocations,
 
-        <RouteContext.Provider
-            value={{
-                locations,
-                setLocations,
-                route,
-                setRoute,
-                loading,
-                setLoading
-            }}
-        >
+          route,
+          setRoute,
 
-            {children}
+          lastRequest,
+          setLastRequest,
 
-        </RouteContext.Provider>
+          loading,
+          setLoading,
 
+          error,
+          setError,
+        }}
+      >
+        {children}
+      </RouteContext.Provider>
     );
 
 }

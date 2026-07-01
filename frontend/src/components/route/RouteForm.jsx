@@ -11,26 +11,29 @@ function RouteForm() {
     const [source, setSource] = useState("");
 
     const [destination, setDestination] = useState("");
+    const [algorithm, setAlgorithm] = useState("DIJKSTRA");
 
     const handleSubmit = async () => {
 
-        if (!source || !destination) {
+    if (!source || !destination) {
 
-            alert("Please select both locations.");
+        alert("Please select both locations.");
 
-            return;
+        return;
 
-        }
+    }
 
-        await calculateRoute({
+    await calculateRoute({
 
-            sourceLocationId: Number(source),
+        sourceId: Number(source),
 
-            destinationLocationId: Number(destination)
+        destinationId: Number(destination),
 
-        });
+        algorithm
 
-    };
+    });
+
+};
 
     return (
 
@@ -89,6 +92,22 @@ function RouteForm() {
                     ))}
 
                 </select>
+
+                <select
+                        className="w-full border rounded-lg p-3"
+                        value={algorithm}
+                        onChange={(e) => setAlgorithm(e.target.value)}
+                    >
+
+                        <option value="DIJKSTRA">
+                            Dijkstra
+                        </option>
+
+                        <option value="ASTAR">
+                            A*
+                        </option>
+
+                    </select>
 
                 <button
                     onClick={handleSubmit}

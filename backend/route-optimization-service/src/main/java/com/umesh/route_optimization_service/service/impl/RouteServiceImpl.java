@@ -18,11 +18,12 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public RouteResponse optimizeRoute(RouteRequest request) {
 
-        PathResult result = graphService.shortestPath(
-                request.getSourceLocationId(),
-                request.getDestinationLocationId());
+        PathResult pathResult = graphService.shortestPath(
+                request.getSourceId(),
+                request.getDestinationId(),
+                request.getAlgorithm());
 
-        return RouteMapper.toResponse(result);
+        return RouteMapper.toResponse(pathResult);
 
     }
 

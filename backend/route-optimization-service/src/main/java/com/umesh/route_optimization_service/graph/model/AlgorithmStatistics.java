@@ -5,20 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PathResult {
+public class AlgorithmStatistics {
 
-    private Double totalDistance;
+    private String algorithm;
 
-    private Double totalTravelTime;
+    private Integer visitedNodes;
 
-    private List<GraphNode> path;
-
-    private AlgorithmStatistics statistics;
+    private Long executionTimeMs;
 
 }

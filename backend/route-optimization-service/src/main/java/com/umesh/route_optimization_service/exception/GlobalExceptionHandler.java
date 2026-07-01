@@ -61,4 +61,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(response);
     }
+
+    @ExceptionHandler(RouteNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleRouteNotFound(
+            RouteNotFoundException ex) {
+
+        ApiResponse<Object> response = ApiResponse.builder()
+                .success(false)
+                .message(ex.getMessage())
+                .data(null)
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(response);
+
+    }
 }

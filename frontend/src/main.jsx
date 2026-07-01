@@ -5,17 +5,14 @@ import "leaflet/dist/leaflet.css";
 import "./config/leafletConfig";
 import App from "./App";
 import { RouteProvider } from "./context/RouteContext";
+import { TrafficProvider } from "./context/TrafficContext";
 
 createRoot(document.getElementById("root")).render(
-
-    <StrictMode>
-
-        <RouteProvider>
-
-            <App />
-
-        </RouteProvider>
-
-    </StrictMode>
-
+  <StrictMode>
+    <RouteProvider>
+      <TrafficProvider>
+        <App />
+      </TrafficProvider>
+    </RouteProvider>
+  </StrictMode>,
 );

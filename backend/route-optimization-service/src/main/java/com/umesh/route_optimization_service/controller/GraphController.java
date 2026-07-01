@@ -1,5 +1,6 @@
 package com.umesh.route_optimization_service.controller;
 
+import com.umesh.route_optimization_service.graph.algorithm.AlgorithmType;
 import com.umesh.route_optimization_service.graph.dto.GraphResponse;
 import com.umesh.route_optimization_service.graph.model.PathResult;
 import com.umesh.route_optimization_service.graph.service.GraphService;
@@ -23,9 +24,13 @@ public class GraphController {
     @GetMapping("/shortest-path")
     public PathResult shortestPath(
             @RequestParam Long source,
-            @RequestParam Long destination) {
+            @RequestParam Long destination,
+            @RequestParam(defaultValue = "DIJKSTRA") AlgorithmType algorithm) {
 
-        return graphService.shortestPath(source, destination);
+        return graphService.shortestPath(
+                source,
+                destination,
+                algorithm);
 
     }
 

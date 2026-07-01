@@ -13,6 +13,7 @@ import com.umesh.route_optimization_service.traffic.entity.TrafficLevel;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.Cacheable;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,8 @@ public class GraphBuilder {
 
     private final TrafficInfoRepository trafficRepository;
 
-    public Graph buildGraph() {
+    @Cacheable("graphCache")
+    public Graph buildGraph()  {
 
         Graph graph = new Graph();
 

@@ -1,12 +1,15 @@
 import MainLayout from "./layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
+import useTrafficSocket from "./hooks/useTrafficSocket";
 
 function App() {
-    return (
-        <MainLayout>
-            <Dashboard />
-        </MainLayout>
-    );
+  useTrafficSocket();
+
+  return (
+    <MainLayout>
+      <Dashboard />
+    </MainLayout>
+  );
 }
 
 export default App;

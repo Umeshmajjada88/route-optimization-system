@@ -22,8 +22,10 @@ public class RouteMapper {
         double travelTime = pathResult.getTotalTravelTime();
 
         return RouteResponse.builder()
+                .algorithm(pathResult.getStatistics().getAlgorithm())
                 .totalDistance(pathResult.getTotalDistance())
                 .totalTravelTime(travelTime)
+                .statistics(pathResult.getStatistics())
                 .path(nodes)
                 .build();
 

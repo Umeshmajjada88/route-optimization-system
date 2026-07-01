@@ -1,79 +1,61 @@
 import { useRouteContext } from "../../context/RouteContext";
+import StatisticsCard from "../dashboard/StatisticsCard";
+import RouteSummary from "../dashboard/RouteSummary";
+import RouteTimeline from "./RouteTimeline";
+import LoadingSpinner from "../common/LoadingSpinner";
+import EmptyState from "../common/EmptyState";
+import ErrorAlert from "../common/ErrorAlert";
 
 function RouteDetails() {
+  const { route, loading, error } = useRouteContext();
 
-    const { route } = useRouteContext();
-
+  if (loading) {
     return (
+      <div className="bg-white rounded-xl shadow-md p-6 h-full">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Route Details</h2>
 
-        <div className="bg-white rounded-xl shadow-md p-6 h-full">
-
-            <h2 className="text-xl font-semibold mb-5">
-
-                Route Details
-
-            </h2>
-
-            {
-
-                !route ?
-
-                    <p>No Route Selected</p>
-
-                    :
-
-                    <>
-
-                        <p>
-
-                            <strong>Total Distance :</strong>{" "}
-
-                            {route.totalDistance.toFixed(2)} km
-
-                        </p>
-
-                        <p className="mt-2">
-
-                            <strong>Total Travel Time :</strong>{" "}
-
-                            {route.totalTravelTime.toFixed(2)} mins
-
-                        </p>
-
-                        <hr className="my-4" />
-
-                        <h3 className="font-semibold">
-
-                            Path
-
-                        </h3>
-
-                        <ul className="list-disc pl-5 mt-2">
-
-                            {
-
-                                route.path.map(node => (
-
-                                    <li key={node.id}>
-
-                                        {node.name}
-
-                                    </li>
-
-                                ))
-
-                            }
-
-                        </ul>
-
-                    </>
-
-            }
-
-        </div>
-
+        <LoadingSpinner message="Calculating Optimal Route..." />
+      </div>
     );
+  }
 
+  if (error) {
+    return (
+      <div
+        className="
+        bg-white
+        rounded-xl
+        shadow-md
+        p-6
+        h-full
+        lg:sticky
+        lg:top-6
+    "
+      >
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Route Details</h2>
+
+        <ErrorAlert message={error} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-xl shadow-md p-6 h-full">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Route Details</h2>
+
+      {!route ? (
+        <EmptyState />
+      ) : (
+        <>
+          <RouteSummary route={route} />
+
+          <StatisticsCard route={route} />
+
+          <RouteTimeline path={route.path} />
+        </>
+      )}
+    </div>
+  );
 }
 
 export default RouteDetails;
