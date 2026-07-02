@@ -12,9 +12,7 @@ on:
       - master
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     defaults:
@@ -22,7 +20,6 @@ jobs:
         working-directory: backend/route-optimization-service
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -36,6 +33,17 @@ jobs:
       - name: Run Tests
         run: mvn clean verify
 
-      - name: Print Surefire Report
+      - name: Print Surefire Reports
         if: failure()
-        run: find target/surefire-reports -type f cat target/surefire-reports/*.txt
+        run: |
+          echo "===== Files ====="
+          find target/surefire-reports -type f
+
+          echo ""
+          echo "===== Reports ====="
+
+          for file in target/surefire-reports/*.txt
+          do
+            echo "----- $file -----"
+            cat "$file"
+          done
