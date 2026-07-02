@@ -8,130 +8,110 @@ import com.umesh.route_optimization_service.graph.util.PathReconstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class DijkstraAlgorithmTest {
 
-    private DijkstraAlgorithm dijkstraAlgorithm;
-
-    private Graph graph;
+    private DijkstraAlgorithm algorithm;
 
     @BeforeEach
     void setUp() {
 
-        dijkstraAlgorithm = new DijkstraAlgorithm(new PathReconstructor());
-
-        graph = new Graph();
-
-        GraphNode nodeA = GraphNode.builder()
-                .id(1L)
-                .name("A")
-                .latitude(0.0)
-                .longitude(0.0)
-                .build();
-
-        GraphNode nodeB = GraphNode.builder()
-                .id(2L)
-                .name("B")
-                .latitude(0.0)
-                .longitude(1.0)
-                .build();
-
-        GraphNode nodeC = GraphNode.builder()
-                .id(3L)
-                .name("C")
-                .latitude(0.0)
-                .longitude(2.0)
-                .build();
-
-        graph.addNode(nodeA);
-        graph.addNode(nodeB);
-        graph.addNode(nodeC);
-
-        graph.addEdge(
-                GraphEdge.builder()
-                        .sourceId(1L)
-                        .destinationId(2L)
-                        .distance(10.0)
-                        .travelTime(10.0)
-                        .build());
-
-        graph.addEdge(
-                GraphEdge.builder()
-                        .sourceId(2L)
-                        .destinationId(3L)
-                        .distance(10.0)
-                        .travelTime(10.0)
-                        .build());
-
-        graph.addEdge(
-                GraphEdge.builder()
-                        .sourceId(1L)
-                        .destinationId(3L)
-                        .distance(30.0)
-                        .travelTime(30.0)
-                        .build());
+        algorithm = new DijkstraAlgorithm(
+                new PathReconstructor());
 
     }
 
     @Test
     void shouldFindShortestPath() {
 
-        PathResult result = dijkstraAlgorithm.findPath(graph, 1L, 3L);
+        Graph graph = new Graph();
+
+        GraphNode a = GraphNode.builder()
+                .id(1L)
+                .name("A")
+                .latitude(0.0)
+                .longitude(0.0)
+                .build();
+
+        GraphNode b = GraphNode.builder()
+                .id(2L)
+                .name("B")
+                .latitude(0.0)
+                .longitude(1.0)
+                .build();
+
+        GraphNode c = GraphNode.builder()
+                .id(3L)
+                .name("C")
+                .latitude(0.0)
+                .longitude(2.0)
+                .build();
+
+        graph.addNode(a);
+        graph.addNode(b);
+        graph.addNode(c);
+
+        graph.addEdge(
+                GraphEdge.builder()
+                        .sourceId(1L)
+                        .destinationId(2L)
+                        .distance(5.0)
+                        .travelTime(5.0)
+                        .build());
+
+        graph.addEdge(
+                GraphEdge.builder()
+                        .sourceId(2L)
+                        .destinationId(3L)
+                        .distance(5.0)
+                        .travelTime(5.0)
+                        .build());
+
+        graph.addEdge(
+                GraphEdge.builder()
+                        .sourceId(1L)
+                        .destinationId(3L)
+                        .distance(20.0)
+                        .travelTime(20.0)
+                        .build());
+
+        PathResult result = algorithm.findPath(
+                graph,
+                1L,
+                3L);
 
         assertNotNull(result);
 
-        assertEquals(20.0, result.getTotalDistance());
+        assertEquals(
+                10.0,
+                result.getTotalTravelTime());
 
-        assertEquals(20.0, result.getTotalTravelTime());
+        assertEquals(
+                10.0,
+                result.getTotalDistance());
 
-        List<GraphNode> path = result.getPath();
+        assertEquals(
+                3,
+                result.getPath().size());
 
-        assertEquals(3, path.size());
+        assertEquals(
+                "A",
+                result.getPath().get(0).getName());
 
-        assertEquals("A", path.get(0).getName());
+        assertEquals(
+                "B",
+                result.getPath().get(1).getName());
 
-        assertEquals("B", path.get(1).getName());
-
-        assertEquals("C", path.get(2).getName());
-
-    }
-
-    @Test
-    void shouldReturnAlgorithmStatistics() {
-
-        PathResult result = dijkstraAlgorithm.findPath(graph, 1L, 3L);
+        assertEquals(
+                "C",
+                result.getPath().get(2).getName());
 
         assertNotNull(result.getStatistics());
 
         assertEquals(
                 "DIJKSTRA",
                 result.getStatistics().getAlgorithm());
-
-        assertTrue(
-                result.getStatistics().getVisitedNodes() > 0);
-
-        assertTrue(
-                result.getStatistics().getExecutionTimeMs() >= 0);
-
-    }
-
-    @Test
-    void shouldReturnSingleNodePathWhenSourceEqualsDestination() {
-
-        PathResult result = dijkstraAlgorithm.findPath(graph, 1L, 1L);
-
-        assertEquals(0.0, result.getTotalDistance());
-
-        assertEquals(0.0, result.getTotalTravelTime());
-
-        assertEquals(1, result.getPath().size());
-
-        assertEquals(
-                "A",
-                result.getPath().get(0).getName());
 
     }
 

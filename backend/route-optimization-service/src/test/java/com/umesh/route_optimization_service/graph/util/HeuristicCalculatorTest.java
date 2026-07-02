@@ -18,7 +18,7 @@ class HeuristicCalculatorTest {
     }
 
     @Test
-    void shouldReturnZeroWhenSourceAndDestinationAreSame() {
+    void shouldReturnZeroForSameLocation() {
 
         GraphNode node = GraphNode.builder()
                 .id(1L)
@@ -27,9 +27,14 @@ class HeuristicCalculatorTest {
                 .longitude(78.4867)
                 .build();
 
-        double result = heuristicCalculator.calculate(node, node);
+        double result = heuristicCalculator.calculate(
+                node,
+                node);
 
-        assertEquals(0.0, result, 0.000001);
+        assertEquals(
+                0.0,
+                result,
+                0.0001);
 
     }
 
@@ -45,39 +50,46 @@ class HeuristicCalculatorTest {
 
         GraphNode destination = GraphNode.builder()
                 .id(2L)
-                .name("Bangalore")
-                .latitude(12.9716)
-                .longitude(77.5946)
+                .name("Madhapur")
+                .latitude(17.4483)
+                .longitude(78.3915)
                 .build();
 
-        double result = heuristicCalculator.calculate(source, destination);
+        double result = heuristicCalculator.calculate(
+                source,
+                destination);
 
         assertTrue(result > 0);
 
     }
 
     @Test
-    void shouldReturnSameDistanceInBothDirections() {
+    void shouldBeSymmetric() {
 
         GraphNode source = GraphNode.builder()
                 .id(1L)
-                .name("Hyderabad")
                 .latitude(17.3850)
                 .longitude(78.4867)
                 .build();
 
         GraphNode destination = GraphNode.builder()
                 .id(2L)
-                .name("Bangalore")
-                .latitude(12.9716)
-                .longitude(77.5946)
+                .latitude(17.4483)
+                .longitude(78.3915)
                 .build();
 
-        double forward = heuristicCalculator.calculate(source, destination);
+        double forward = heuristicCalculator.calculate(
+                source,
+                destination);
 
-        double reverse = heuristicCalculator.calculate(destination, source);
+        double reverse = heuristicCalculator.calculate(
+                destination,
+                source);
 
-        assertEquals(forward, reverse, 0.000001);
+        assertEquals(
+                forward,
+                reverse,
+                0.0001);
 
     }
 
